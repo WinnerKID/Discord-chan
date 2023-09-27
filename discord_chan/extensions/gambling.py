@@ -232,6 +232,35 @@ class Gambling(commands.Cog):
 
         await ctx.send(f"You {status} {bet} coin{singular}")
 
+    # Blackjack game - Richard
+    @commands.command(aliases=["bj"])
+    async def blackjack(self, ctx: "SubContext", guess: Literal["h", "s"], bet: int):
+        """
+        Type h to hit, type s to stand, or type e to end the game.
+        """
+        if bet < 1:
+            return await ctx.send("Bet must be positive")
+
+        if not await self.has_amount(ctx.author.id, bet):
+            return await ctx.send(f"You don't have enough coins to bet {bet}")
+
+        if guess == "e":
+            return await ctx.send("Ok bye")
+
+        outcome = random.choice(["h", "s"])
+
+        status = "won"
+        gain = bet
+        if guess != outcome:
+            gain = -bet
+            status = "lost"
+
+        await self.bot.database.add_coins(ctx.author.id, gain)
+
+        singular = "" if bet == 1 else "s"
+
+        await ctx.send(f"You {status} {bet} coin{singular}")
+
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))

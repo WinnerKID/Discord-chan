@@ -485,3 +485,45 @@ class SliderGame(menus.Menu):
     async def run(self, ctx):
         await self.start(ctx, wait=True)
         return self.has_won, self.moves
+
+# Blackjack game -richard
+# Define the deck of cards
+suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+ranks = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace']
+values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
+          'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
+class BlackjackGame:
+    def __init__(self):
+        self.deck = [(rank, suit) for rank in ranks for suit in suits]
+        self.player_hand  = []
+        self.dealer_hand  = []
+        self.player_score = 0
+        self.dealer_score = 0
+
+    def deal_initial(self):
+        shuffle(self.deck)
+        self.player_hand  = [self.deck.pop(), self.deck.pop()]
+        self.dealer_hand  = [self.deckpop(), self.deck.pop()]
+        self.player_score =
+        self.dealer_score =
+
+    def calculate_scores(self, hand):
+        scores =
+        aces =
+
+    def hit(self, hand):
+
+    def get_winner(self):
+        if self.player_score > 21:
+            return "Dealer"
+        elif self.dealer_score > 21:
+            return "Player"
+        elif self.player_score == self.dealer_score:
+            return "Tie"
+        elif self.player_score > self.dealer_score:
+            return "Player"
+        else:
+            return "Dealer"
+    async def run(self, ctx):
+        print('ok ok ok')
+
