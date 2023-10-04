@@ -489,7 +489,7 @@ class SliderGame(menus.Menu):
 # Blackjack game -richard
 # Define the deck of cards
 suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-ranks = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace']
+ranks = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace'] # starr said something about removing ranks and using dicts instead
 values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
           'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
 class BlackjackGame:
@@ -503,16 +503,34 @@ class BlackjackGame:
     def deal_initial(self):
         shuffle(self.deck)
         self.player_hand  = [self.deck.pop(), self.deck.pop()]
-        self.dealer_hand  = [self.deckpop(), self.deck.pop()]
-        self.player_score =
-        self.dealer_score =
+        self.dealer_hand  = [self.deck.pop(), self.deck.pop()]
+        self.player_score = self.calculate_score(self.player_hand)
+        self.dealer_score = self.calculate_score(self.dealer_hand)
 
     def calculate_scores(self, hand):
-        scores =
-        aces =
+        scores = sum(values[card[0]] for card in hand)
+        aces = [card for card in hand if card[0] == 'Ace']
+        for _ in aces:
+                if score > 21:
+                    score -= 10
+            return score
 
     def hit(self, hand):
+        card = self.deck.pop()
+        hand.append(card)
+        return card
 
+    def player_turn(self):
+        self.hit(self.player_hand)
+        self.player_score = self.calculate_score(self.player_hand)
+
+    def dealer_turn(self):
+        while self.dealer_score < 17:
+            self.hit(self.dealer_hand)
+            self.dealer_score = self.calculate_score(self.dealer_hand)
+
+
+# starr said something about using enum
     def get_winner(self):
         if self.player_score > 21:
             return "Dealer"
@@ -524,6 +542,6 @@ class BlackjackGame:
             return "Player"
         else:
             return "Dealer"
-    async def run(self, ctx):
+    async def run(self, ctx): # im not sure what to put for this function 
         print('ok ok ok')
 
